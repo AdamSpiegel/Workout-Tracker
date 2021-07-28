@@ -14,7 +14,10 @@ router.post("/api/workouts", (req, res) => {
 
 
 router.get("/api/workouts", (req, res) => {
-    // Workout.aggregate?
+    Workout.aggregate().project({ 'day'}).addFields(
+        {}
+    )
+
 });
 
 router.put("/api/workouts/:id", (req, res) => {
