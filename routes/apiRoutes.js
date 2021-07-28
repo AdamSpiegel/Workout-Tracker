@@ -1,7 +1,6 @@
+const mongoose = require("mongoose");
 const router = require("express").Router();
 const Workout = require("../models/workouts.js");
-// Do I need to require anything additional for API Routes?
-// How do you include aggregate functionality in routes?
 
 router.post("/api/workouts", (req, res) => {
     Workout.create({})
