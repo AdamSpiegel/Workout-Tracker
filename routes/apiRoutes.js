@@ -26,7 +26,7 @@ router.get("/api/workouts", (req, res) => {
 });
 
 router.put("/api/workouts/:id", (req, res) => {
-    Workout.findOneAndUpdate(
+    Workout.collection.findOneAndUpdate(
         req.params.id,
         { $push: { exercise: req.body } },
         { new: true, runValidators: true }
@@ -40,7 +40,6 @@ router.put("/api/workouts/:id", (req, res) => {
 
 
 });
-
 
 router.get(`/api/workouts/range`, (req, res) => {
     Workout.aggregate([
