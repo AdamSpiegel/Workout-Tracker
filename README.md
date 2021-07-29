@@ -18,7 +18,9 @@ A workout tracker application which allows the user to view, create and track da
 
 ## Installation
 
-Please follow these steps:
+The following steps were built out in order to create this functional workout tracker:
+
+1.
 
 ## Project Usage
 
