@@ -14,10 +14,15 @@ router.post("/api/workouts", (req, res) => {
 
 
 router.get("/api/workouts", (req, res) => {
-    Workout.aggregate().project({ 'day': 1, 'exercises.duration': 1, 'exercises.sets': 1, }).addFields(
-        {}
-    )
-
+    Workout.aggregate().project({ 'day': 1, 'exercises.duration': 1, 'exercises.sets': 1, 'exercises.weight': 1, 'exercises.reps': 1, 'exercises.distance': 1, 'exercises.type': 1, 'exercises.name': 1, }).addFields(
+        { totalDuration: { $sum: '$exercises.duration' }, totalSets: { $sum: 'exercises.sets' }, totalDistance: { $sum: '$exercises.distance' } })
+        .sort({ day: 1 })
+        .then(workout => {
+            res.json(workout);
+        })
+        .catch((err) => {
+            res.json(err)
+        });
 });
 
 router.put("/api/workouts/:id", (req, res) => {
