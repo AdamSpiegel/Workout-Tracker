@@ -12,7 +12,6 @@ router.post("/api/workouts", (req, res) => {
         })
 });
 
-
 router.get("/api/workouts", (req, res) => {
     Workout.aggregate().project({ 'day': 1, 'exercises.duration': 1, 'exercises.sets': 1, 'exercises.weight': 1, 'exercises.reps': 1, 'exercises.distance': 1, 'exercises.type': 1, 'exercises.name': 1, }).addFields(
         { totalDuration: { $sum: '$exercises.duration' }, totalSets: { $sum: 'exercises.sets' }, totalDistance: { $sum: '$exercises.distance' } })
