@@ -14,21 +14,48 @@ router.post("/api/workouts", (req, res) => {
 
 
 router.get("/api/workouts", (req, res) => {
-    Workout.aggregate().project({ 'day'}).addFields(
+    Workout.aggregate().project({ 'day': 1, 'exercises.duration': 1, 'exercises.sets': 1, }).addFields(
         {}
     )
 
 });
 
 router.put("/api/workouts/:id", (req, res) => {
-    console.log('PARAMS', req.params)
+    Workout.findOneAndUpdate(
+        req.params.id,
+        { $push: { exercise: req.body } },
+        { new: true, runValidators: true }
+    )
+        .then((workout) => {
+            res.json(workout)
+        })
+        .catch((err) => {
+            res.json(err)
+        })
 
 
 });
 
 
 router.get(`/api/workouts/range`, (req, res) => {
-
+    Workout.aggregate([
+        {
+            $addFields: {
+                totalDuration:
+                    { $sum: '$exercise.duration' },
+                totalWeight:
+                    { $sum: 'exercises.weight' }
+            }
+        }
+    ])
+        .limit(7)
+        .then((workout) => {
+            console.log('Workouts Aggregated', workout);
+            res.json(workout)
+        })
+        .catch((err) => {
+            res.json(err)
+        })
 });
 
 module.exports = router;
