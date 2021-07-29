@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-// Creating a new Mongoose Workout Schema
+// Creating a new Mongoose Workout Schema to record current date (default) and all exercise data.
 const workoutSchema = new Schema({
 
     day: {
